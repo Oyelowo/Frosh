@@ -1,29 +1,47 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+export default class App extends Component {
+  state = {
+    placeName: '',
+    places: []
+  }
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+  placeNameChangedHandler = (value) => {
+    this.setState({ placeName: value })
+  }
 
-export default class App extends Component{
+  placeSubmitHandler = () => {
+    if (this.state.placeName.trim() === "") {
+      return;
+    }
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(prevState.placeName)
+      };
+    });
+  };
+
+
+
+  
+
   render() {
+    const placesOutput = this.state.places.map((place, i) => (
+      <Text key={i}>{place}</Text>
+    ))
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Channel we 1: We can make it happen:This can't be true! Really? Glad! It works now? Massive!</Text>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>        
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.placeInput}
+            placeholder="Nice places"
+            value={this.state.placeName}
+            onChangeText={this.placeNameChangedHandler}
+          />
+          <Button title="ADD" style={styles.placeButton} onPress={this.placeSubmitHandler} />
+        </View>
+        <View>{placesOutput}</View>
       </View>
     );
   }
@@ -32,18 +50,22 @@ export default class App extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    padding: 26,
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#fff'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  inputContainer: {
+    // flex: 1,
+    width: "100%",
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: 'center'
   },
-  instructions: {
-    textAlign: 'center',
-    color: 'red',
-    marginBottom: 5,
+  placeInput: {
+    width: "70%"
   },
+  placeButton: {
+    width: "30%"
+  }
 });
