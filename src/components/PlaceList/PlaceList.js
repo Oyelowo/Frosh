@@ -10,7 +10,7 @@ const placeList = (props) => {
             onItemPressed={() => props.onItemDeleted(i)} />
     ))
     return (
-        <ScrollViewus style={styles.listContainer}>{placesOutput}</ScrollViewus>
+        <ScrollView style={styles.listContainer}>{placesOutput}</ScrollView>
     )
 }
 
