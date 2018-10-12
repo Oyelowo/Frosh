@@ -3,4 +3,4 @@ export {
   deletePlace,
   selectedPlace,
   deselectPlace
-} from "/places.js";
+} from "./places";

@@ -13,10 +13,10 @@ import {
 // import placeImage from "./src/assets/kumpula.jpg";
 
 class App extends Component {
-  state = {};
 
   placeAddedHandler = placeName => {
     this.props.onAddPlace(placeName);
+    console.log('Place Added')
   };
 
   placeSelectedHandler = key => {
@@ -69,8 +69,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddPlace: name => dispatch(addPlace(name)),
     onDeletePlace: () => dispatch(deletePlace()),
-    onSelectPlace: key => dispatch(selectedPlace(key)),
-    onDeselectPlace: () => dispatch(selectedPlace())
+    onSelectPlace: key => dispatch(selectPlace(key)),
+    onDeselectPlace: () => dispatch(deselectPlace())
   };
 };
 
