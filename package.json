@@ -5,12 +5,14 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "clean-cache":"react-native start --reset-cache"
+    "clean-cache": "react-native start --reset-cache"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "react": "16.5.0",
-    "react-native": "0.57.2"
+    "react-native": "0.57.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
