@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
+import { connect } from "react-redux";
 import PlaceInput from "./src/components/PlaceInput/PlaceInput";
 import PlaceList from "./src/components/PlaceList/PlaceList";
 import PlaceDetail from "./src/components/PlaceDetail/PlaceDetail";
+import {
+  addPlace,
+  deletePlace,
+  selectedPlace,
+  deselectPlace
+} from "./src/store/actions/index";
 // import placeImage from "./src/assets/kumpula.jpg";
 
-export default class App extends Component {
+class App extends Component {
   state = {
     places: [],
     selectedPlace: null
@@ -78,3 +85,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   }
 });
+
+const mapStateToProps = state => {
+  return {
+    places: state.places.places,
+    selectedPlace: state.places.selectedPlace
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddPlace: name => dispatch(addPlace(name)),
+    onDeletePlace: () => dispatch(deletePlace()),
+    onSelectPlace: key => dispatch(selectedPlace(key)),
+    onDeselectPlace: () => dispatch(selectedPlace())
+  };
+};
+
+export default App;
