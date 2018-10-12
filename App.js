@@ -7,7 +7,7 @@ import PlaceDetail from "./src/components/PlaceDetail/PlaceDetail";
 import {
   addPlace,
   deletePlace,
-  selectedPlace,
+  selectPlace,
   deselectPlace
 } from "./src/store/actions/index";
 // import placeImage from "./src/assets/kumpula.jpg";
