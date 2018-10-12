@@ -13,62 +13,35 @@ import {
 // import placeImage from "./src/assets/kumpula.jpg";
 
 class App extends Component {
-  state = {
-    places: [],
-    selectedPlace: null
-  };
+  state = {};
 
   placeAddedHandler = placeName => {
-    this.setState(prevState => {
-      return {
-        places: prevState.places.concat({
-          key: Math.random().toString(),
-          placeName,
-          placeImage: {
-            uri:
-              "http://www.helsinki.fi/kirjasto/files/2814/0005/0986/kumpula.jpg"
-          }
-        })
-      };
-    });
+    this.props.onAddPlace(placeName);
   };
 
   placeSelectedHandler = key => {
-    this.setState(prevState => {
-      return {
-        selectedPlace: prevState.places.find(place => {
-          return place.key === key;
-        })
-      };
-    });
+    this.props.onSelectPlace(key);
   };
 
   placeDeletedHandler = () => {
-    this.setState(prevState => {
-      return {
-        places: prevState.places.filter(place => {
-          return place.key !== prevState.selectedPlace.key;
-        }),
-        selectedPlace: null
-      };
-    });
+    this.props.onDeletePlace();
   };
 
   modalClosedHandler = () => {
-    this.setState({ selectedPlace: null });
+    this.props.onDeselectPlace();
   };
 
   render() {
     return (
       <View style={styles.container}>
         <PlaceDetail
-          selectedPlace={this.state.selectedPlace}
+          selectedPlace={this.props.selectedPlace}
           onItemDeleted={this.placeDeletedHandler}
           onModalClosed={this.modalClosedHandler}
         />
         <PlaceInput onPlaceAdded={this.placeAddedHandler} />
         <PlaceList
-          places={this.state.places}
+          places={this.props.places}
           onItemSelected={this.placeSelectedHandler}
         />
       </View>
@@ -101,4 +74,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default App;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
