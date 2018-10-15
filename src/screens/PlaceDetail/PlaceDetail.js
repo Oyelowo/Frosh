@@ -1,35 +1,47 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   View,
   Image,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-
+import { connect } from "react-redux";
+import { deletePlace } from "../../store/actions/index";
 import Icon from "react-native-vector-icons/Ionicons";
 
-const placeDetail = props => {
-  return (
-    <View style={styles.container}>
-      <View>
-        <Image source={props.selectedPlace.placeImage} style={styles.placeImage} />
-        <Text style={styles.placeName}>{props.selectedPlace.placeName}</Text>
-        <TouchableOpacity>
-          <View style={styles.deleteButton}>
-            <Icon
-              size={30}
-              name="ios-trash"
-              color="red"
-              onPress={props.onItemDeleted}
-            />
-          </View>
-        </TouchableOpacity>
+class PlaceDetail extends Component {
+  placeDeletedHandler = () => {
+    this.props.onDeletePlace(this.props.selectedPlace.key);
+    this.props.navigator.pop()
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View>
+          <Image
+            source={this.props.selectedPlace.placeImage}
+            style={styles.placeImage}
+          />
+          <Text style={styles.placeName}>
+            {this.props.selectedPlace.placeName}
+          </Text>
+          <TouchableOpacity>
+            <View style={styles.deleteButton}>
+              <Icon
+                size={30}
+                name="ios-trash"
+                color="red"
+                onPress={this.placeDeletedHandler}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -49,4 +61,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default placeDetail;
+const mapDispatchToProps = dispatch => ({
+  onDeletePlace: key => dispatch(deletePlace(key))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PlaceDetail);
