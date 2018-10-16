@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import PlaceInput from "../../components/PlaceInput/PlaceInput";
-import {connect} from 'react-redux';
-import {addPlace} from '../../store/actions/index';
+import { connect } from "react-redux";
+import { addPlace } from "../../store/actions/index";
 
 class SharePlaceScreen extends Component {
-  placeAddedHandler =(placeName) => {
-    this.props.onAddPlace(placeName);
+  constructor(props) {
+    super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
   }
-  
+
+  onNavigatorEvent = event => {
+    console.log(event);
+  };
+
+  placeAddedHandler = placeName => {
+    this.props.onAddPlace(placeName);
+  };
 
   render() {
     return (
@@ -19,9 +27,11 @@ class SharePlaceScreen extends Component {
   }
 }
 
-
-const mapDispatchToProps = (dispatch) => ({
-onAddPlace:(placeName) =>dispatch(addPlace(placeName))
+const mapDispatchToProps = dispatch => ({
+  onAddPlace: placeName => dispatch(addPlace(placeName))
 });
 
-export default connect(null, mapDispatchToProps)(SharePlaceScreen);
+export default connect(
+  null,
+  mapDispatchToProps
+)(SharePlaceScreen);
